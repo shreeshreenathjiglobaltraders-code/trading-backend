@@ -18,6 +18,9 @@ if (process.env.DATABASE_URL) {
     queueLimit: 0
   };
 
+
+
+  
   // Use socketPath if provided (for XAMPP/MariaDB local connection)
   if (process.env.DB_SOCKET_PATH) {
     dbConfig.socketPath = process.env.DB_SOCKET_PATH;
