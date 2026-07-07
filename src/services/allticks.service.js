@@ -494,7 +494,17 @@ class AllTickService {
             const unslashedInstrument = instrument.replace('/', '');
             const unslashedSymbol = `${prefix}:${unslashedInstrument}`;
 
-            const base = { ...item, category: prefix.toLowerCase() };
+            // Lookup dynamic lot size from CommodityLotService
+            const commodityLotService = require('./CommodityLotService');
+            const lotInfo = commodityLotService.getLotInfo(instrument);
+            const lotSize = lotInfo ? lotInfo.lot_size : 1;
+
+            const base = { 
+                ...item, 
+                category: prefix.toLowerCase(),
+                lotSize: lotSize,
+                lot_size: lotSize
+            };
 
             mds.prices[slashedSymbol] = {
                 ...mds.prices[slashedSymbol],
@@ -513,7 +523,7 @@ class AllTickService {
             };
             mds.dirtySymbols.add(unslashedSymbol);
 
-            console.log(`[ALLTICKS] 📡 Broadcast: ${slashedSymbol} | Bid: ${item.bid} Ask: ${item.ask}`);
+            // console.log(`[ALLTICKS] 📡 Broadcast: ${slashedSymbol} | Bid: ${item.bid} Ask: ${item.ask}`);
         } catch (err) {
             console.error('[ALLTICKS] Broadcast error:', err.message);
         }
