@@ -51,7 +51,6 @@ const ALLOWED_ORIGINS = [
     'http://localhost:8081',
     'https://traderss.kiaantechnology.com',
     'https://trading-software112.netlify.app',
-    'https://shrishreenathjiglobaltraders.com',
     process.env.FRONTEND_URL
 ].filter(Boolean);
 
